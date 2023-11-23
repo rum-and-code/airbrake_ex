@@ -40,9 +40,9 @@ defmodule AirbrakeEx.PlugTest do
       Plug.Conn.resp(conn, 200, "")
     end)
 
-
-    conn = conn(:get, "/hello")
-    |> fetch_query_params()
+    conn =
+      conn(:get, "/hello")
+      |> fetch_query_params()
 
     try do
       AirbrakeEx.TestPlug.call(conn, [])

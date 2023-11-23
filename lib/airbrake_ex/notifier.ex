@@ -15,10 +15,12 @@ defmodule AirbrakeEx.Notifier do
 
   def notify(error, options \\ []) do
     skip_ignore = Keyword.get(options, :skip_ignore, false)
+
     if skip_ignore || proceed?(Application.get_env(:airbrake_ex, :ignore), error) do
       filter_parameters_config = Config.get(:airbrake_ex, :filter_parameters, [])
       params = Keyword.get(options, :params, [])
       filtered_params = filter_parameters(params, filter_parameters_config)
+
       payload =
         %{}
         |> add_notifier
