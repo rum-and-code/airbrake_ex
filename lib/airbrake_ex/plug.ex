@@ -1,23 +1,23 @@
-defmodule Airbrakex.Plug do
+defmodule AirbrakeEx.Plug do
   @moduledoc """
-  You can plug `Airbrakex.Plug` in your web application Plug stack
+  You can plug `AirbrakeEx.Plug` in your web application Plug stack
   to send all exception to `airbrake`
 
   ```elixir
   defmodule YourApp.Router do
     use Phoenix.Router
-    use Airbrakex.Plug
+    use AirbrakeEx.Plug
 
     # ...
   end
   ```
   """
 
-  alias Airbrakex.{ExceptionParser, Notifier}
+  alias AirbrakeEx.{ExceptionParser, Notifier}
 
   defmacro __using__(_env) do
     quote location: :keep do
-      @before_compile Airbrakex.Plug
+      @before_compile AirbrakeEx.Plug
     end
   end
 

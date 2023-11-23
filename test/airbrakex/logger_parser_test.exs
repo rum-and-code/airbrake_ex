@@ -1,4 +1,4 @@
-defmodule Airbrakex.LoggerParserTest do
+defmodule AirbrakeEx.LoggerParserTest do
   use ExUnit.Case
 
   test "should parse exception from logs" do
@@ -49,6 +49,6 @@ defmodule Airbrakex.LoggerParserTest do
       type: "Ecto.NoResultsError"
     }
 
-    assert Airbrakex.LoggerParser.parse(exception) == result
+    assert AirbrakeEx.LoggerParser.parse(exception) == result
   end
 end

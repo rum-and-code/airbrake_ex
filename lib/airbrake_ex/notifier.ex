@@ -1,22 +1,22 @@
-defmodule Airbrakex.Notifier do
+defmodule AirbrakeEx.Notifier do
   @moduledoc false
   use HTTPoison.Base
-  alias Airbrakex.Config
+  alias AirbrakeEx.Config
 
   @request_headers [{"Content-Type", "application/json"}]
   @default_endpoint "https://api.airbrake.io"
   @default_env Mix.env()
 
   @info %{
-    name: "Airbrakex",
-    version: Airbrakex.Mixfile.project()[:version],
-    url: Airbrakex.Mixfile.project()[:package][:links][:github]
+    name: "AirbrakeEx",
+    version: AirbrakeEx.Mixfile.project()[:version],
+    url: AirbrakeEx.Mixfile.project()[:package][:links][:github]
   }
 
   def notify(error, options \\ []) do
     skip_ignore = Keyword.get(options, :skip_ignore, false)
-    if skip_ignore || proceed?(Application.get_env(:airbrakex, :ignore), error) do
-      filter_parameters_config = Config.get(:airbrakex, :filter_parameters, [])
+    if skip_ignore || proceed?(Application.get_env(:airbrake_ex, :ignore), error) do
+      filter_parameters_config = Config.get(:airbrake_ex, :filter_parameters, [])
       params = Keyword.get(options, :params, [])
       filtered_params = filter_parameters(params, filter_parameters_config)
       payload =
@@ -79,19 +79,19 @@ defmodule Airbrakex.Notifier do
   defp add(payload, key, value), do: payload |> Map.put(key, value)
 
   defp url do
-    project_id = Config.get(:airbrakex, :project_id)
-    project_key = Config.get(:airbrakex, :project_key)
-    endpoint = Config.get(:airbrakex, :endpoint, @default_endpoint)
+    project_id = Config.get(:airbrake_ex, :project_id)
+    project_key = Config.get(:airbrake_ex, :project_key)
+    endpoint = Config.get(:airbrake_ex, :endpoint, @default_endpoint)
 
     "#{endpoint}/api/v3/projects/#{project_id}/notices?key=#{project_key}"
   end
 
   defp http_options do
-    Config.get(:airbrakex, :http_options) || []
+    Config.get(:airbrake_ex, :http_options) || []
   end
 
   defp environment do
-    Config.get(:airbrakex, :environment, @default_env)
+    Config.get(:airbrake_ex, :environment, @default_env)
   end
 
   defp proceed?(ignore, _error) when is_nil(ignore), do: true

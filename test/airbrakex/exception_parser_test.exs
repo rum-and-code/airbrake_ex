@@ -1,4 +1,4 @@
-defmodule Airbrakex.ExceptionParserTest do
+defmodule AirbrakeEx.ExceptionParserTest do
   use ExUnit.Case
 
   test "parses exception" do
@@ -9,7 +9,7 @@ defmodule Airbrakex.ExceptionParserTest do
         e -> {e, __STACKTRACE__}
       end
 
-    parsed_exception = Airbrakex.ExceptionParser.parse(exception, stacktrace)
+    parsed_exception = AirbrakeEx.ExceptionParser.parse(exception, stacktrace)
 
     backtrace = parsed_exception[:backtrace]
     message = parsed_exception[:message]
@@ -24,7 +24,7 @@ defmodule Airbrakex.ExceptionParserTest do
 
     assert Enum.member?(
              backtrace_files,
-             "(Elixir.Airbrakex.ExceptionParserTest) test/airbrakex/exception_parser_test.exs"
+             "(Elixir.AirbrakeEx.ExceptionParserTest) test/airbrake_ex/exception_parser_test.exs"
            )
 
     assert Enum.member?(backtrace_files, "(timer) timer.erl")
