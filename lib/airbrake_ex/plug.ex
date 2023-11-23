@@ -1,7 +1,7 @@
 defmodule AirbrakeEx.Plug do
   @moduledoc """
-  You can plug `AirbrakeEx.Plug` in your web application Plug stack
-  to send all exception to `airbrake`
+  Add the `AirbrakeEx.Plug` to you web application Plug stack
+  to send all exceptions to `airbrake`
 
   ```elixir
   defmodule YourApp.Router do

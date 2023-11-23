@@ -5,10 +5,12 @@ defmodule AirbrakeEx do
 
   ### Configuration
 
-  It requires `project_key` and `project` parameters to be set
-  in your application environment, usually defined in your `config/config.exs`.
-  `logger_level` and `environment` are optional.
-  If you want to use errbit instance, set custom url as endpoint.
+  The `project_key` and `project_id` parameters must be set
+  in your application environment, usually defined in your `config/config.exs` or,
+  if you are setting them with environment variables, then wherever you do that
+  (`config/runtime.exs`, `rel/config.exs`, etc). `logger_level` and `environment` are optional.
+  To use an [Errbit](https://github.com/errbit/errbit) instance rather than Airbrake, set
+  `:endpoint` to your custom url.
 
   ```elixir
   config :airbrake_ex,
@@ -29,7 +31,7 @@ defmodule AirbrakeEx do
   end
   ```
 
-  You can ignore certain types of errors by specifying `:ignore` config key:
+  You can ignore certain types of errors by specifying the `:ignore` config key:
 
   ```elixir
   config :airbrake_ex,
@@ -51,7 +53,7 @@ defmodule AirbrakeEx do
   alias AirbrakeEx.{ExceptionParser, Notifier}
 
   @doc """
-  Notify `airbrake` about new exception
+  Notify `airbrake` about a new exception
 
   ## Parameters
 

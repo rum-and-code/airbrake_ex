@@ -1,6 +1,6 @@
 defmodule AirbrakeEx.LoggerBackend do
   @moduledoc """
-  A Logger backend to send exceptions from logs to the `airbrake`
+  A Logger backend to send exceptions from logs to `airbrake`
 
   ## Usage
 

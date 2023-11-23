@@ -1,6 +1,6 @@
 defmodule AirbrakeEx.Config do
   @moduledoc """
-  This module handles smart fetching values from the config
+  This module handles smart fetching of values from the config
   """
 
   @doc """
