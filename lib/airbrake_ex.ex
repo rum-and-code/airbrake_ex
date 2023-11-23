@@ -1,4 +1,4 @@
-defmodule Airbrakex do
+defmodule AirbrakeEx do
   @moduledoc """
   This module provides functions to report any kind of exception to
   [Airbrake](https://airbrake.io/).
@@ -11,7 +11,7 @@ defmodule Airbrakex do
   If you want to use errbit instance, set custom url as endpoint.
 
   ```elixir
-  config :airbrakex,
+  config :airbrake_ex,
     project_key: "abcdef12345",
     project_id: 123456,
     logger_level: :error,
@@ -25,14 +25,14 @@ defmodule Airbrakex do
   try do
     IO.inspect("test",[],"")
   rescue
-    exception -> Airbrakex.notify(exception, __STACKTRACE__)
+    exception -> AirbrakeEx.notify(exception, __STACKTRACE__)
   end
   ```
 
   You can ignore certain types of errors by specifying `:ignore` config key:
 
   ```elixir
-  config :airbrakex,
+  config :airbrake_ex,
     ...
     # List form
     ignore: [Phoenix.Router.NoRouteError]
@@ -48,7 +48,7 @@ defmodule Airbrakex do
   ```
   """
 
-  alias Airbrakex.{ExceptionParser, Notifier}
+  alias AirbrakeEx.{ExceptionParser, Notifier}
 
   @doc """
   Notify `airbrake` about new exception

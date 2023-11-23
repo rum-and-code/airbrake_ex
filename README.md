@@ -1,13 +1,13 @@
-# Airbrakex [![Package Version](https://img.shields.io/hexpm/v/airbrakex.svg)](https://hex.pm/packages/airbrakex) [![Code Climate](https://codeclimate.com/github/fazibear/airbrakex/badges/gpa.svg)](https://codeclimate.com/github/fazibear/airbrakex) [![Build Status](https://travis-ci.org/fazibear/airbrakex.svg?branch=master)](https://travis-ci.org/fazibear/airbrakex)
-Elixir client for the [Airbrake](https://airbrake.io) service!
+# AirbrakeEx [![Package Version](https://img.shields.io/hexpm/v/airbrake_ex.svg)](https://hex.pm/packages/airbrake_ex)
+Elixir client for the [Airbrake](https://airbrake.io) service.
 
 ## Installation
 
-Add Airbrakex as a dependency to your `mix.exs` file:
+Add AirbrakeEx as a dependency to your `mix.exs` file:
 
 ```elixir
 defp deps do
-  [{:airbrakex, git: "https://github.com/rum-and-code/airbrakex.git", tag: "v0.2.4"}]
+  [{:airbrake_ex, "~> 0.2.4"}]
 end
 ```
 
@@ -15,7 +15,7 @@ If on Elixir 1.3 or lower you will need to add it to your applications.
 
 ```elixir
 def application do
-  [applications: [:airbrakex]]
+  [applications: [:airbrake_ex]]
 end
 ```
 
@@ -29,7 +29,7 @@ in your application environment, usually defined in your `config/config.exs`.
 `logger_level` and `environment` are optional.
 
 ```elixir
-config :airbrakex,
+config :airbrake_ex,
   project_key: "abcdef12345",
   project_id: 123456,
   logger_level: :error,
@@ -44,7 +44,7 @@ If you connect through a proxy or need to pass other specific options to
 for a list of the available options.
 
 ```elixir
-config :airbrakex,
+config :airbrake_ex,
   project_key: "abcdef12345",
   project_id: 123456,
   endpoint: "http://errbit.yourdomain.com",
@@ -57,7 +57,7 @@ config :airbrakex,
 try do
   IO.inspect("test",[],"")
 rescue
-  exception -> Airbrakex.notify(exception, __STACKTRACE__)
+  exception -> AirbrakeEx.notify(exception, __STACKTRACE__)
 end
 ```
 
@@ -68,17 +68,17 @@ which could be configured as follows:
 
 ```elixir
 config :logger,
-  backends: [:console, Airbrakex.LoggerBackend]
+  backends: [:console, AirbrakeEx.LoggerBackend]
 ```
 
 ### Plug
 
-You can plug `Airbrakex.Plug` in your web application Plug stack to send all exception to Airbrake
+You can plug `AirbrakeEx.Plug` in your web application Plug stack to send all exception to Airbrake
 
 ```elixir
 defmodule YourApp.Router do
   use Phoenix.Router
-  use Airbrakex.Plug
+  use AirbrakeEx.Plug
 
   # ...
 end
@@ -93,7 +93,7 @@ You can ignore certain types of errors by specifying a global `:ignore` as well 
 This will prevent errors from being sent from the notifier to Airbrake
 
 ```elixir
-config :airbrakex,
+config :airbrake_ex,
   ...
   # List form
   ignore: [Phoenix.Router.NoRouteError]
@@ -115,7 +115,7 @@ This is only needed if you are using the [Logger Backend](#logger-backend).
 `:ignore_backend` prevents logs from being sent from the backend to the notifier. For example, it can be used to prevent errors that are already being logged by the plug from double logging.
 
 ```elixir
-config :airbrakex,
+config :airbrake_ex,
   ...
   # Function
   ignore_backend: fn(log) ->
@@ -127,3 +127,9 @@ config :airbrakex,
   end
 ```
 
+## History
+
+This library was based on a fork from the
+[`airbrakex`](https://hex.pm/packages/airbrakex) Hex package.  Development and
+support for that library seems to have lapsed, but we (the devs at
+[Rum&Code](https://rumandcode.io/)) had changes and updates we wanted to make, so we decided to turn our forked version into a separate library. We'd like to thank to [Michał Kalbarczyk](https://github.com/fazibear) for his work on the original library.

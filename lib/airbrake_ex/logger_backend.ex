@@ -1,4 +1,4 @@
-defmodule Airbrakex.LoggerBackend do
+defmodule AirbrakeEx.LoggerBackend do
   @moduledoc """
   A Logger backend to send exceptions from logs to the `airbrake`
 
@@ -6,13 +6,13 @@ defmodule Airbrakex.LoggerBackend do
 
   ```elixir
   config :logger,
-    backends: [Airbrakex.LoggerBackend]
+    backends: [AirbrakeEx.LoggerBackend]
   ```
   """
 
   @behaviour :gen_event
 
-  alias Airbrakex.{LoggerParser, Notifier}
+  alias AirbrakeEx.{LoggerParser, Notifier}
 
   def init(__MODULE__) do
     {:ok, configure([])}
@@ -51,8 +51,8 @@ defmodule Airbrakex.LoggerBackend do
   end
 
   defp proceed?({Logger, _msg, _ts, meta} = log) do
-    Keyword.get(meta, :airbrakex, true) and
-      not ignore_backend?(Application.get_env(:airbrakex, :ignore_backend), log)
+    Keyword.get(meta, :airbrake_ex, true) and
+      not ignore_backend?(Application.get_env(:airbrake_ex, :ignore_backend), log)
   end
 
   defp ignore_backend?(ignore, _error) when is_nil(ignore), do: false
@@ -87,7 +87,7 @@ defmodule Airbrakex.LoggerBackend do
     Application.put_env(:logger, __MODULE__, config)
 
     %{
-      level: Application.get_env(:airbrakex, :logger_level, :error),
+      level: Application.get_env(:airbrake_ex, :logger_level, :error),
       metadata: Keyword.get(config, :metadata, [])
     }
   end

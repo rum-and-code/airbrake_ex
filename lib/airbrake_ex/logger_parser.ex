@@ -1,4 +1,4 @@
-defmodule Airbrakex.LoggerParser do
+defmodule AirbrakeEx.LoggerParser do
   @moduledoc false
   @stacktrace_regex ~r/^\s*(?<file>\([^()]+\)\s+[^:]+):(?<line>\d+):(?<function>.*)/m
   @type_regex ~r/^\s*\*\*\s*\((?<type>[^()]+)\)/m

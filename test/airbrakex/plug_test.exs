@@ -1,12 +1,12 @@
-defmodule Airbrakex.TestPlug do
-  use Airbrakex.Plug
+defmodule AirbrakeEx.TestPlug do
+  use AirbrakeEx.Plug
 
   def call(_conn, _opts) do
     IO.inspect("test", [], "")
   end
 end
 
-defmodule Airbrakex.PlugTest do
+defmodule AirbrakeEx.PlugTest do
   use ExUnit.Case
   use Plug.Test
 
@@ -15,10 +15,10 @@ defmodule Airbrakex.PlugTest do
 
   setup do
     bypass = Bypass.open()
-    Application.put_env(:airbrakex, :endpoint, "http://localhost:#{bypass.port}")
-    Application.put_env(:airbrakex, :project_id, @project_id)
-    Application.put_env(:airbrakex, :project_key, @project_key)
-    Application.put_env(:airbrakex, :ignore, fn _ -> false end)
+    Application.put_env(:airbrake_ex, :endpoint, "http://localhost:#{bypass.port}")
+    Application.put_env(:airbrake_ex, :project_id, @project_id)
+    Application.put_env(:airbrake_ex, :project_key, @project_key)
+    Application.put_env(:airbrake_ex, :ignore, fn _ -> false end)
 
     error =
       try do
@@ -45,7 +45,7 @@ defmodule Airbrakex.PlugTest do
     |> fetch_query_params()
 
     try do
-      Airbrakex.TestPlug.call(conn, [])
+      AirbrakeEx.TestPlug.call(conn, [])
     rescue
       e in FunctionClauseError -> e
     end

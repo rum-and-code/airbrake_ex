@@ -1,4 +1,4 @@
-defmodule Airbrakex.ExceptionParser do
+defmodule AirbrakeEx.ExceptionParser do
   @moduledoc false
 
   def parse(exception, stacktrace \\ []) do

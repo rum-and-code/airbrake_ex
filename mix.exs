@@ -1,9 +1,9 @@
-defmodule Airbrakex.Mixfile do
+defmodule AirbrakeEx.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :airbrakex,
+      app: :airbrake_ex,
       version: "0.2.4",
       elixir: "~> 1.0",
       description: "Airbrake Elixir Notifier",
@@ -11,17 +11,17 @@ defmodule Airbrakex.Mixfile do
       deps: deps(),
       dialyzer: dialyzer(),
       docs: [
-        main: Airbrakex,
-        source_url: "https://github.com/rum-and-code/airbrakex"
+        main: AirbrakeEx,
+        source_url: "https://github.com/rum-and-code/airbrake_ex"
       ]
     ]
   end
 
   def package() do
     [
-      maintainers: ["Michał Kalbarczyk", "Rum&Code"],
+      maintainers: ["Rum&Code", "Michał Kalbarczyk"],
       licenses: ["MIT"],
-      links: %{github: "https://github.com/rum-and-code/airbrakex"}
+      links: %{github: "https://github.com/rum-and-code/airbrake_ex"}
     ]
   end
 
