@@ -35,7 +35,7 @@ defmodule AirbrakeEx.ExceptionParserTest do
     assert Enum.member?(backtrace_functions, "inspect(\"test\", [], \"\")")
     assert Enum.member?(backtrace_functions, "test parses exception/1")
     assert Enum.member?(backtrace_functions, "exec_test/1")
-    assert Enum.member?(backtrace_functions, "tc/1")
+    assert Enum.member?(backtrace_functions, "tc/2")
 
     compare = &Version.compare(System.version(), &1)
 
