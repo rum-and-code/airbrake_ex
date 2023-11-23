@@ -1,4 +1,4 @@
-# Airbrake_ex [![Package Version](https://img.shields.io/hexpm/v/airbrake_ex.svg)](https://hex.pm/packages/airbrake_ex)
+# AirbrakeEx [![Package Version](https://img.shields.io/hexpm/v/airbrake_ex.svg)](https://hex.pm/packages/airbrake_ex)
 Elixir client for the [Airbrake](https://airbrake.io) service.
 
 ## Installation
@@ -7,7 +7,7 @@ Add AirbrakeEx as a dependency to your `mix.exs` file:
 
 ```elixir
 defp deps do
-  [{:airbrake_ex, git: "https://github.com/rum-and-code/airbrake_ex.git", tag: "v0.2.4"}]
+  [{:airbrake_ex, "~> 0.2.4"}]
 end
 ```
 
@@ -129,7 +129,7 @@ config :airbrake_ex,
 
 ## History
 
-This library was originally forked from the
+This library was based on a fork from the
 [`airbrakex`](https://hex.pm/packages/airbrakex) Hex package.  Development and
 support for that library seems to have lapsed, but we (the devs at
-[Rum&Code](https://rumandcode.io/)) had changes and updates we wanted to make, so we decided to publish our own fork of the library.
+[Rum&Code](https://rumandcode.io/)) had changes and updates we wanted to make, so we decided to turn our forked version into a separate library. We'd like to thank to [Michał Kalbarczyk](https://github.com/fazibear) for his work on the original library.

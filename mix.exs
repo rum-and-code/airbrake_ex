@@ -19,7 +19,7 @@ defmodule AirbrakeEx.Mixfile do
 
   def package() do
     [
-      maintainers: ["Rum&Code"],
+      maintainers: ["Rum&Code", "Michał Kalbarczyk"],
       licenses: ["MIT"],
       links: %{github: "https://github.com/rum-and-code/airbrake_ex"}
     ]
