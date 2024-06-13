@@ -36,20 +36,17 @@ defmodule AirbrakeEx.Notifier do
   end
 
   defp filter_parameters(params, filter_config) do
-    IO.inspect("--------------")
-    IO.inspect(params, label: "params")
     for {key, value} <- params, into: %{} do
-      IO.inspect(key, label: "key")
-      IO.inspect(value, label: "value")
       if ignore_parameter?(key, filter_config) or contains_password?(key) do
-        IO.inspect("**")
         {key, "***"}
       else
-        IO.inspect(value)
-        {key, value}
+        if is_map(value) do
+          {key, filter_parameters(value, filter_config)}
+        else
+          {key, value}
+        end
       end
     end
-    IO.inspect("--------------")
   end
 
   defp ignore_parameter?(key, filtered_keys) when is_list(filtered_keys) do
@@ -61,7 +58,7 @@ defmodule AirbrakeEx.Notifier do
   end
 
   defp contains_password?(key) do
-    String.contains?(key, "password")
+    String.contains?(to_string(key), "password")
   end
 
   defp add_notifier(payload) do
