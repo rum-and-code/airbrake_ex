@@ -114,6 +114,34 @@ defmodule AirbrakeEx.NotifierTest do
     Application.put_env(:airbrake_ex, :filter_parameters, [])
   end
 
+  test "notifies with password params will be obfuscated", %{bypass: bypass, error: error} do
+    Bypass.expect(bypass, fn conn ->
+      opts = [parsers: [Plug.Parsers.JSON], json_decoder: Jason]
+      conn = Plug.Parsers.call(conn, Plug.Parsers.init(opts))
+
+      assert %{"password" => "***", "user_password" => "***", "foo" => "bar"} == conn.body_params["params"]
+
+      Plug.Conn.resp(conn, 200, "")
+    end)
+
+    AirbrakeEx.Notifier.notify(error, params: %{password: "bar", user_password: "foo", foo: "bar"})
+    Application.put_env(:airbrake_ex, :filter_parameters, [])
+  end
+
+  test "notifies with deep password params will be obfuscated", %{bypass: bypass, error: error} do
+    Bypass.expect(bypass, fn conn ->
+      opts = [parsers: [Plug.Parsers.JSON], json_decoder: Jason]
+      conn = Plug.Parsers.call(conn, Plug.Parsers.init(opts))
+
+      assert %{"user" => %{"password" => "***"}} == conn.body_params["params"]
+
+      Plug.Conn.resp(conn, 200, "")
+    end)
+
+    AirbrakeEx.Notifier.notify(error, params: %{"user" => %{"password" => "foo_bar"}})
+    Application.put_env(:airbrake_ex, :filter_parameters, [])
+  end
+
   test "evaluates system environment if specified", %{bypass: bypass, error: error} do
     System.put_env("AIR_TEST_ID", "airbrake_ex_id")
     System.put_env("AIR_TEST_KEY", "airbrake_ex_key")
@@ -156,10 +184,10 @@ defmodule AirbrakeEx.NotifierTest do
     Bypass.expect(bypass, fn conn ->
       opts = [parsers: [Plug.Parsers.JSON], json_decoder: Jason]
       conn = Plug.Parsers.call(conn, Plug.Parsers.init(opts))
-
-      assert "/api/v3/projects/project_id/notices" == conn.request_path
+      
+      assert "/api/v3/projects/#{@project_id}/notices" == conn.request_path
       assert "POST" == conn.method
-      assert "key=project_key" == conn.query_string
+      assert "key=#{@project_key}" == conn.query_string
 
       %{
         "errors" => [

@@ -127,6 +127,25 @@ config :airbrake_ex,
   end
 ```
 
+### Filter parameter
+
+
+```elixir
+config :airbrake_ex,
+  ...
+  # List form
+  filter_parameters: [Phoenix.Router.NoRouteError]
+  # OR
+  # Function
+  filter_parameters: fn(error) ->
+    cond do
+      error.type == Phoenix.Router.NoRouteError -> true
+      String.contains?(error.message, "Ecto.NoResultsError") -> true
+      true -> false
+    end
+  end
+```
+
 ## History
 
 This library was based on a fork from the

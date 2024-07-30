@@ -35,14 +35,30 @@ defmodule AirbrakeEx.Notifier do
     end
   end
 
-  defp filter_parameters(params, filtered_keys) do
+  defp filter_parameters(params, filter_config) do
     for {key, value} <- params, into: %{} do
-      if Enum.member?(filtered_keys, to_string(key)) do
+      if ignore_parameter?(key, filter_config) or contains_password?(key) do
         {key, "***"}
       else
-        {key, value}
+        if is_map(value) do
+          {key, filter_parameters(value, filter_config)}
+        else
+          {key, value}
+        end
       end
     end
+  end
+
+  defp ignore_parameter?(key, filtered_keys) when is_list(filtered_keys) do
+    Enum.member?(filtered_keys, to_string(key))
+  end
+
+  defp ignore_parameter?(key, filter_function) when is_function(filter_function) do
+    filter_function.(key)
+  end
+
+  defp contains_password?(key) do
+    String.contains?(to_string(key), "password")
   end
 
   defp add_notifier(payload) do
