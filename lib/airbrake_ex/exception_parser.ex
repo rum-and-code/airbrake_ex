@@ -1,11 +1,17 @@
 defmodule AirbrakeEx.ExceptionParser do
   @moduledoc false
 
+  alias AirbrakeEx.Utils
+
   def parse(exception, stacktrace \\ []) do
+    filter_params = AirbrakeEx.Config.get(:airbrake_ex, :filter_parameters, [])
+    filtered_exception = struct(exception.__struct__, Utils.filter(exception, filter_params))
+    filtered_stacktrace = Utils.filter(stacktrace, filter_params)
+
     %{
       type: exception.__struct__,
-      message: Exception.message(exception),
-      backtrace: stacktrace(stacktrace)
+      message: Exception.message(filtered_exception),
+      backtrace: stacktrace(filtered_stacktrace)
     }
   end
 

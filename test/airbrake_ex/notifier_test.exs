@@ -119,12 +119,16 @@ defmodule AirbrakeEx.NotifierTest do
       opts = [parsers: [Plug.Parsers.JSON], json_decoder: Jason]
       conn = Plug.Parsers.call(conn, Plug.Parsers.init(opts))
 
-      assert %{"password" => "***", "user_password" => "***", "foo" => "bar"} == conn.body_params["params"]
+      assert %{"password" => "***", "user_password" => "***", "foo" => "bar"} ==
+               conn.body_params["params"]
 
       Plug.Conn.resp(conn, 200, "")
     end)
 
-    AirbrakeEx.Notifier.notify(error, params: %{password: "bar", user_password: "foo", foo: "bar"})
+    AirbrakeEx.Notifier.notify(error,
+      params: %{password: "bar", user_password: "foo", foo: "bar"}
+    )
+
     Application.put_env(:airbrake_ex, :filter_parameters, [])
   end
 
@@ -184,7 +188,7 @@ defmodule AirbrakeEx.NotifierTest do
     Bypass.expect(bypass, fn conn ->
       opts = [parsers: [Plug.Parsers.JSON], json_decoder: Jason]
       conn = Plug.Parsers.call(conn, Plug.Parsers.init(opts))
-      
+
       assert "/api/v3/projects/#{@project_id}/notices" == conn.request_path
       assert "POST" == conn.method
       assert "key=#{@project_key}" == conn.query_string
