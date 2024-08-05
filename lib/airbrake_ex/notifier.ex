@@ -9,8 +9,8 @@ defmodule AirbrakeEx.Notifier do
 
   @info %{
     name: "AirbrakeEx",
-    version: AirbrakeEx.Mixfile.project()[:version],
-    url: AirbrakeEx.Mixfile.project()[:package][:links][:github]
+    version: AirbrakeEx.MixProject.project()[:version],
+    url: AirbrakeEx.MixProject.project()[:package][:links][:github]
   }
 
   def notify(error, options \\ []) do
