@@ -1,4 +1,4 @@
-defmodule AirbrakeEx.Mixfile do
+defmodule AirbrakeEx.MixProject do
   use Mix.Project
 
   def project do
@@ -26,9 +26,7 @@ defmodule AirbrakeEx.Mixfile do
   end
 
   def application() do
-    [
-      applications: [:httpoison]
-    ]
+    []
   end
 
   defp deps() do
@@ -36,7 +34,7 @@ defmodule AirbrakeEx.Mixfile do
       {:httpoison, "~> 1.8"},
       {:jason, "~> 1.4.4"},
       {:bypass, "~> 2.1", only: :test},
-      {:ex_doc, ">= 0.0.0", only: :dev},
+      {:ex_doc, "~> 0.31", only: :dev, runtime: false},
       {:credo, "~> 1.0.0", only: :dev, runtime: false},
       {:dialyxir, "~> 1.4.3", only: :dev, runtime: false}
     ]
