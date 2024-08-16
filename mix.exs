@@ -4,7 +4,7 @@ defmodule AirbrakeEx.MixProject do
   def project do
     [
       app: :airbrake_ex,
-      version: "0.2.8",
+      version: "0.2.9",
       elixir: "~> 1.14",
       description: "Airbrake notifier for Elixir",
       package: package(),
