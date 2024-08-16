@@ -17,21 +17,33 @@ defmodule AirbrakeEx.Plug do
 
   defmacro __using__(_env) do
     quote location: :keep do
-      use Plug.ErrorHandler
+      @before_compile AirbrakeEx.Plug
+    end
+  end
 
-      def handle_errors(conn, %{kind: :error, reason: exception, stack: stacktrace}) do
-        exception = ExceptionParser.parse(exception, stacktrace)
-        session = AirbrakeEx.Utils.detuple(conn.private[:plug_session])
+  defmacro __before_compile__(_env) do
+    quote location: :keep do
+      defoverridable call: 2
 
-        Notifier.notify(
-          exception,
-          params: conn.params,
-          session: session,
-          context: %{url: Plug.Conn.request_url(conn)}
-        )
+      def call(conn, opts) do
+        try do
+          super(conn, opts)
+        rescue
+          exception ->
+            parsed_exception = ExceptionParser.parse(exception, __STACKTRACE__)
+            session = Map.get(conn.private, :plug_session)
+
+            _ =
+              Notifier.notify(
+                parsed_exception,
+                params: conn.params,
+                session: session,
+                context: %{url: Plug.Conn.request_url(conn)}
+              )
+
+            reraise exception, __STACKTRACE__
+        end
       end
-
-      def handle_errors(_conn, _map), do: nil
     end
   end
 end

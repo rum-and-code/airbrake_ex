@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.9
+- Fix a bug introduced in 0.2.8 with the decoding of the exception
+
 ## 0.2.8
 - Hides filter_parameters option in the exception message and stack trace
 
